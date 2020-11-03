@@ -89,17 +89,7 @@ struct Settings: View {
                             _ = try? shellOut(to: "defaults delete com.apple.Mail DisableSendAnimations")
                             _ = try? shellOut(to: "defaults delete com.apple.Mail DisableReplyAnimations")
                             _ = try? shellOut(to: "defaults delete NSGlobalDomain NSWindowResizeTime")
-                            func dialogOKCancel(question: String, text: String) -> Bool {
-                                let alert = NSAlert()
-                                alert.messageText = question
-                                alert.informativeText = text
-                                alert.alertStyle = .warning
-                                alert.addButton(withTitle: "OK")
-                                alert.addButton(withTitle: "Cancel")
-                                return alert.runModal() == .alertFirstButtonReturn
-                            }
-
-                            let answer = dialogOKCancel(question: "Changes made Sucessfully", text: "Reboot to apply changes")
+                            Alert(title: Text("Changes made sucessfully"), message: Text("Reboot to apply changes"), dismissButton: .default(Text("Got it")))
                         } label: {
                             ZStack {
                                 if releaseTrack == "Public Beta" {
