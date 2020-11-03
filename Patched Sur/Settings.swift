@@ -41,6 +41,17 @@ struct Settings: View {
                             _ = try? shellOut(to: "defaults write com.apple.Mail DisableSendAnimations -bool true")
                             _ = try? shellOut(to: "defaults write com.apple.Mail DisableReplyAnimations -bool true")
                             _ = try? shellOut(to: "defaults write NSGlobalDomain NSWindowResizeTime .001")
+                            func dialogOKCancel(question: String, text: String) -> Bool {
+                                let alert = NSAlert()
+                                alert.messageText = question
+                                alert.informativeText = text
+                                alert.alertStyle = .warning
+                                alert.addButton(withTitle: "OK")
+                                alert.addButton(withTitle: "Cancel")
+                                return alert.runModal() == .alertFirstButtonReturn
+                            }
+
+                            let answer = dialogOKCancel(question: "Changes made Sucessfully", text: "Reboot to apply changes")
                         } label: {
                             ZStack {
                                 if releaseTrack == "Public Beta" {
@@ -78,6 +89,17 @@ struct Settings: View {
                             _ = try? shellOut(to: "defaults delete com.apple.Mail DisableSendAnimations")
                             _ = try? shellOut(to: "defaults delete com.apple.Mail DisableReplyAnimations")
                             _ = try? shellOut(to: "defaults delete NSGlobalDomain NSWindowResizeTime")
+                            func dialogOKCancel(question: String, text: String) -> Bool {
+                                let alert = NSAlert()
+                                alert.messageText = question
+                                alert.informativeText = text
+                                alert.alertStyle = .warning
+                                alert.addButton(withTitle: "OK")
+                                alert.addButton(withTitle: "Cancel")
+                                return alert.runModal() == .alertFirstButtonReturn
+                            }
+
+                            let answer = dialogOKCancel(question: "Changes made Sucessfully", text: "Reboot to apply changes")
                         } label: {
                             ZStack {
                                 if releaseTrack == "Public Beta" {
