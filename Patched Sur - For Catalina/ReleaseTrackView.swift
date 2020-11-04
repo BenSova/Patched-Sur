@@ -19,7 +19,7 @@ struct ReleaseTrackView: View {
             Group {
                 switch track {
                 case .release:
-                    Text("Your update track is what versions of macOS updates you get. The \"release\" update track contains the official macOS updates that you normally get with a Mac when updating. These versions of macOS are the most stable. However, this version of the patcher ") + Text("does not").bold() + Text(" support release updates since it was developed during the betas and the release might be different.")
+                    Text("Your update track is what versions of macOS updates you get. The \"release\" update track contains the official macOS updates that you normally get with a Mac when updating. These versions of macOS are the most stable. However, this version of the patcher ") + Text("does not").bold() + Text(" support release updates, since it was developed during the betas and the release might be different.")
                 case .publicbeta:
                     Text("Your update track is what versions of macOS updates you get. The \"public beta\" update track contains the unstable beta macOS updates that are designed for public use, but not distribution uses because these updates are still buggy.")
                 case .developer:

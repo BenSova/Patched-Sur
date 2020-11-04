@@ -18,7 +18,7 @@ struct VolumeSelector: View {
     var body: some View {
         VStack {
             Text("Select a USB Volume").bold()
-            Text("To install MacOS Big Sur, you need to make a usb installer. This USB must be 16GB or greater to store the main os and recovery mode. If you're USB doesn't show up, click refresh to reindex the list.")
+            Text("To install MacOS Big Sur, you need to make a USB installer. The USB drive must be 16GB or greater to store the main OS and recovery mode. If your USB drive doesn't show up, click refresh to reindex the list.")
                 .padding()
                 .multilineTextAlignment(.center)
             HStack {

@@ -15,7 +15,7 @@ struct MainView : View {
     var body: some View {
         VStack {
             Text("Welcome to Patched Sur!").bold()
-            Text("Patched Sur is a simple, easy to use patcher for MacOS Big Sur on your unsupported Mac. It setups up the ideal environment for Big Sur and makes sure all your favorite services, like iCloud still work.")
+            Text("Patched Sur is a simple, easy to use patcher for macOS Big Sur on your unsupported Mac. It sets up the ideal environment for Big Sur and makes sure all your favorite services, like iCloud, still work.")
                 .padding()
                 .multilineTextAlignment(.center)
             Button {

@@ -15,7 +15,7 @@ struct InstallMethodView: View {
     var body: some View {
         VStack {
             Text("Clean Install or Update macOS").bold()
-            Text("Here you can choose whether you want to update your macOS version from Big Sur to Catalina. Right now, Patched Sur only supports updating, but clean install support is coming soon.")
+            Text("Here, you can choose whether you want to update your macOS version from Catalina to Big Sur. Right now, Patched Sur only supports updating, but clean install support is coming soon.")
                 .padding()
                 .multilineTextAlignment(.center)
             HStack {

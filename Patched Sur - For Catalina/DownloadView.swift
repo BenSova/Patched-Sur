@@ -23,7 +23,7 @@ struct DownloadView: View {
     var body: some View {
         VStack {
             Text("Downloading Set Vars Tool and Kext Patches").bold()
-            Text("The set vars tool allows you to properly setup the nvram and sip status, so that Big Sur lets you boot into it. This is the last tool you use before installing Big Sur. The kext patches allow you to use stuff like WiFi and USB ports, so that your Mac stays at full functionality.")
+            Text("The set vars tool allows you to properly setup the NVRAM and SIP status, so that Big Sur lets you boot into it. This is the last tool you will use before installing Big Sur. The kext patches allow you to use hardware like WiFi and USB ports, so that your Mac stays at its full functionality.")
                 .padding(10)
                 .multilineTextAlignment(.center)
             ZStack {

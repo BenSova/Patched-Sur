@@ -29,7 +29,7 @@ struct InstallPackageView: View {
     var body: some View {
         VStack {
             Text("Downloading Install Assistant Package").bold()
-            Text("The Install Assistant is the file that contains the macOS installer used to, well, install macOS. In our case, we can't just use the app. Later on (the next step), we need to use the createinstallmedia tool provided by this package to create an installer USB. This USB drive then has to be patched so it will even let us boot into it. Simple enough, right? Note this download will take a while.")
+            Text("The Install Assistant is the file that contains the macOS installer used to install macOS. In our case, we can't just use the app. Later on (the next step), we need to use the createinstallmedia tool provided by this package to create an installer USB. This USB drive has to be patched, so it will let us boot into it. Simple enough, right? Note: This download will take a while.")
                 .padding()
                 .multilineTextAlignment(.center)
             ZStack {
