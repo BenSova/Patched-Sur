@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Settings: View {
+    @State private var showingAlert = false
     let releaseTrack: String
     @Binding var at: Int
     var body: some View {
@@ -41,6 +42,8 @@ struct Settings: View {
                             _ = try? shellOut(to: "defaults write com.apple.Mail DisableSendAnimations -bool true")
                             _ = try? shellOut(to: "defaults write com.apple.Mail DisableReplyAnimations -bool true")
                             _ = try? shellOut(to: "defaults write NSGlobalDomain NSWindowResizeTime .001")
+                            self.showingAlert = true
+                            /*
                             func dialogOKCancel(question: String, text: String) -> Bool {
                                 let alert = NSAlert()
                                 alert.messageText = question
@@ -52,6 +55,7 @@ struct Settings: View {
                             }
 
                             let answer = dialogOKCancel(question: "Changes made Sucessfully", text: "Reboot to apply changes")
+                            */
                         } label: {
                             ZStack {
                                 if releaseTrack == "Public Beta" {
@@ -69,6 +73,9 @@ struct Settings: View {
                             }.fixedSize()
                             .cornerRadius(7.5)
                         }
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Changes made sucessfully"), message: Text("Reboot to apply changes"), dismissButton: .default(Text("Got it!")))
+                                }
                         .buttonStyle(BorderlessButtonStyle())
                         Button {
                             _ = try? shellOut(to: "defaults delete -g NSAutomaticWindowAnimationsEnabled")
@@ -89,7 +96,10 @@ struct Settings: View {
                             _ = try? shellOut(to: "defaults delete com.apple.Mail DisableSendAnimations")
                             _ = try? shellOut(to: "defaults delete com.apple.Mail DisableReplyAnimations")
                             _ = try? shellOut(to: "defaults delete NSGlobalDomain NSWindowResizeTime")
+                            self.showingAlert = true
+                            /*
                             Alert(title: Text("Changes made sucessfully"), message: Text("Reboot to apply changes"), dismissButton: .default(Text("Got it")))
+                            */
                         } label: {
                             ZStack {
                                 if releaseTrack == "Public Beta" {
@@ -107,6 +117,9 @@ struct Settings: View {
                             }.fixedSize()
                             .cornerRadius(7.5)
                         }
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Changes made sucessfully"), message: Text("Reboot to apply changes"), dismissButton: .default(Text("Got it!")))
+                                }
                         .buttonStyle(BorderlessButtonStyle())
                     }.padding(.top, 10)
                     .padding(.bottom, 2)
