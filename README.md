@@ -7,7 +7,7 @@ Welcome to Patched Sur, a simple but detailed patcher made for Big Sur.
 Patched Sur is a UI patcher for macOS Big Sur, designed to make it easy to run macOS 11 on unsupported Macs. This patcher hopes to allow any user of any knowledge to patch their Mac, while still giving you freedom on how you want to use your Mac.
 
 ## Compatibility
-please go to: https://bensova.gitbook.io/big-sur/supported-macs
+please go to: https://bensova.gitbook.io/big-sur/supported-macs to see if your mac is supported.
 
 ## How do I use Patched Sur?
 
