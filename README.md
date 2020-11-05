@@ -46,4 +46,16 @@ To choose a different installer that you already have downloaded, click `View Ot
 
 #### How would I update macOS? (Not in current release)
 
-To update macOS, you need to launch the post-install app and click `Update macOS`. Then, select the version you want to update to, (the latest version should be pre-selected). Once it finishes downloading the package, it will prompt you to insert a USB drive, (unless `Install macOS Big Sur Beta` is plugged in, in which will skip the prompt and select the drive). Then, copy the installer onto the USB. After that, boot into the installer and reinstall macOS onto your Big Sur drive. Once that is complete, you can boot into macOS, rerun the post-install patch kexts tool, and enjoy the latest version of macOS Big Sur.
+To update macOS, follow the steps below.
+
+**1.** Launch the post-install app and click `Update macOS`. 
+
+**2.** Select the version you want to update to, (the latest version should be pre-selected). 
+
+**3.** Once it finishes downloading the package, it will prompt you to insert a USB drive, (unless `Install macOS Big Sur Beta` is plugged in, in which will skip the prompt and select the drive). 
+
+**4.** Copy the installer onto the USB. 
+
+**5.** Boot into the installer and reinstall macOS onto your Big Sur drive. 
+
+**6.** Once that is complete, you can boot into macOS, rerun the post-install patch kexts tool, and enjoy the latest version of macOS Big Sur.
