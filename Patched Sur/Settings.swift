@@ -60,6 +60,37 @@ struct Settings: View {
                     .buttonStyle(BorderlessButtonStyle())
                     .padding(.top, 10)
                     .padding(.bottom, 2)
+                    HStack {
+                        CustomColoredButton("Enable Quick-Wake") {
+                            _ = try? call("sudo pmset -a standbydelay 86400")
+                            self.showingAlert = true
+                        }
+                        CustomColoredButton("Disable Quick-Wake") {
+                            _ = try? call("sudo pmset -a standbydelay 10800")
+                            self.showingAlert = true
+                        }
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Changes Made Successfully"), message: Text("You may need to reboot for the changes to take effect."), dismissButton: .default(Text("Okay")))
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }.padding(.top, 10)
+                    .padding(.bottom, 2)
+                    Text("If your Mac is taking a while to wake from sleep, this may help. What it will do is increase the amount of time before it reaches a 'deep sleep' state. PLEASE NOTE: This may slightly reduce battery life.")
+                    Group {
+                        HStack {
+                            CustomColoredButton("Empty RAM") {
+                                _ = try? call("sudo purge")
+                                self.showingAlert = true
+                            }
+                            .alert(isPresented: $showingAlert) {
+                                Alert(title: Text("RAM Successfully Purged"), message: Text(""), dismissButton: .default(Text("Okay")))
+                            }
+                            .buttonStyle(BorderlessButtonStyle())
+                        }.padding(.top, 10)
+                        .padding(.bottom, 2)
+                        Text("Purging your RAM may temporarily increase speeds. WARNING: Running this operation may break applications. The developers are not responsible for any damage done by this process.")
+                    }
+                    Group {
                     Text("Sometimes, Patched Sur accidentally leaves little leftovers from when something ran. This could at times save 12GB of storage space, this is suggested especially after you run the updater.")
                         .font(.caption)
                     Text("Patched Sur by Ben Sova")
@@ -67,6 +98,7 @@ struct Settings: View {
                         .padding(.top, 5)
                     Text("Thanks to BarryKN, ASentientBot, jackluke, highvoltage12v, ParrotGeek, testheit, Ausdauersportler, StarPlayrX, ASentientHedgehog, John_Val, fromeister2009 and many others!")
                         .font(.caption)
+                    }
                 }.font(.subheadline)
                 .foregroundColor(.white)
                 .padding(.leading, 2)
@@ -144,6 +176,10 @@ func disableAnimations() {
     _ = try? call("defaults write com.apple.Mail DisableSendAnimations -bool true")
     _ = try? call("defaults write com.apple.Mail DisableReplyAnimations -bool true")
     _ = try? call("defaults write NSGlobalDomain NSWindowResizeTime .001")
+    _ = try? call("defaults write com.apple.Dock autohide-delay -float 0") // Disables delay when hiding Dock
+    _ = try? call("defaults write com.apple.dock launchanim -bool false")  // Disables animations when opening application from Dock
+    _ = try? call("defaults write com.apple.dock expose-animation-duration -float 0.1")  // Makes Mission Control Animations Faster
+    _ = try? call("defaults write com.apple.Safari WebKitInitialTimedLayoutDelay 0.25")  // Disables Safari web rendering delay
 }
 
 func enableAnimations() {
@@ -165,4 +201,9 @@ func enableAnimations() {
     _ = try? call("defaults delete com.apple.Mail DisableSendAnimations")
     _ = try? call("defaults delete com.apple.Mail DisableReplyAnimations")
     _ = try? call("defaults delete NSGlobalDomain NSWindowResizeTime")
+    _ = try? call("defaults delete com.apple.Dock autohide-delay")
+    _ = try? call("defaults delete com.apple.dock launchanim")
+    _ = try? call("defaults delete com.apple.dock expose-animation-duration")
+    _ = try? call("defaults delete com.apple.Safari WebKitInitialTimedLayoutDelay")
 }
+
