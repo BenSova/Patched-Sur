@@ -23,7 +23,7 @@ struct CreateInstallMedia: View {
     var body: some View {
         VStack {
             Text("Creating Install Media").bold()
-            Text("Due to the fact that the installer app cannot be natively run on an unsupported Mac, you have to create an installer USB where the environment can be modified, so macOS doesn't check whether or not you're Mac is supported. This can take up to a couple of hours, so let it run.")
+            Text("Due to the fact that the installer app cannot be natively run on an unsupported Mac, you have to create an installer USB where the environment can be modified, so macOS doesn't check whether or not your Mac is supported. This can take up to a couple of hours, so let it run.")
                 .padding()
                 .multilineTextAlignment(.center)
             ZStack {
