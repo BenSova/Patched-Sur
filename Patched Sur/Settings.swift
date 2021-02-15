@@ -44,7 +44,7 @@ struct Settings: View {
                 }.padding(.top, 10)
                 .padding(.bottom, 2)
                 Text("Manage Animations. Disabling animations can greatly improve performance on Macs without Metal. A reboot is required to apply these changes.")
-                CustomColoredButton("Contribute Your Expriences", hovered: $hovered) {
+                CustomColoredButton("Contribute Your Experiences", hovered: $hovered) {
                     NSWorkspace.shared.open("https://github.com/BenSova/Patched-Sur-Compatibility")
                 }
                 .buttonStyle(BorderlessButtonStyle())
