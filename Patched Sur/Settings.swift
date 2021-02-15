@@ -72,7 +72,7 @@ struct Settings: View {
                             EnterPasswordButton(password: $password) {
                                 do {
                                     print("Stopping displaypolicyd...")
-                                    try call("launchctl stop system/com.apple.displaypolicyd", p: password)
+                                    _ = try? call("launchctl stop system/com.apple.displaypolicyd", p: password)
                                     print("Enabling Automatic Graphics Switching...")
                                     try call("launchctl disable system/com.apple.displaypolicyd", p: password)
                                     showPasswordPrompt = false

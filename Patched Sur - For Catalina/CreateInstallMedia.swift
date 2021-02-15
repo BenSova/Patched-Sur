@@ -23,7 +23,7 @@ struct CreateInstallMedia: View {
     var body: some View {
         VStack {
             Text("Creating Install Media").bold()
-            Text("Due to the fact that the installer app cannot be natively run on an unsupported Mac, you have to create an installer USB where the environment can be modified, so macOS doesn't check whether or not you're Mac is supported. This can take up to a couple of hours, so let it run.")
+            Text("Due to the fact that the installer app cannot be natively run on an unsupported Mac, you have to create an installer USB where the environment can be modified, so macOS doesn't check whether or not your Mac is supported. This can take up to a couple of hours, so let it run.")
                 .padding()
                 .multilineTextAlignment(.center)
             ZStack {
@@ -39,6 +39,12 @@ struct CreateInstallMedia: View {
                         .onAppear {
                             DispatchQueue.global(qos: .background).async {
                                 do {
+                                    print("Disabling bad Spotlight Indexing...")
+                                    _ = try? call("launchctl disable system/com.apple.displaypolicyd", p: password)
+                                    _ = try? call("launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist", p: password)
+                                    print("Stopping mds...")
+                                    _ = try? call("killall mds", p: password)
+                                    _ = try? call("killall mds_stores", p: password)
                                     print("Phrasing for diskID...")
                                     let diskUtilList = try call("diskutil list /Volumes/\(volume.replacingOccurrences(of: " ", with: "\\ "))")
                                     var diskStart = diskUtilList.split(separator: "\n")[2]
@@ -48,6 +54,8 @@ struct CreateInstallMedia: View {
                                     try call("diskutil eraseDisk JHFS+ Install\\ macOS\\ Big\\ Sur GPT \(diskID)")
                                     downloadStatus = "Copying Installer..."
                                 } catch {
+                                    _ = try? call("sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist", p: password)
+                                    _ = try? call("sudo launchctl enable system/com.apple.displaypolicyd", p: password)
                                     downloadStatus = error.localizedDescription
                                 }
                             }
@@ -64,10 +72,6 @@ struct CreateInstallMedia: View {
                         .onAppear {
                             DispatchQueue.global(qos: .background).async {
                                 do {
-                                    print("Disabling bad Spotlight Indexing...")
-                                    _ = try? call("mdutil -i off /Volumes/Install\\ macOS\\ Big\\ Sur", p: password)
-                                    print("Stopping mds...")
-                                    _ = try? call("killall mds", p: password)
                                     let reasonForActivity = "Reason for activity" as CFString
                                     var assertionID: IOPMAssertionID = 0
                                     var success = IOPMAssertionCreateWithName( kIOPMAssertionTypeNoDisplaySleep as CFString,
@@ -89,7 +93,8 @@ struct CreateInstallMedia: View {
                                         downloadStatus = "Unable to pull system attention."
                                     }
                                 } catch {
-                                    _ = try? call("mdutil -i off", p: password)
+                                    _ = try? call("sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist", p: password)
+                                    _ = try? call("sudo launchctl enable system/com.apple.displaypolicyd", p: password)
                                     downloadStatus = error.localizedDescription
                                 }
                             }
@@ -109,7 +114,8 @@ struct CreateInstallMedia: View {
                                     try call("/Volumes/Patched-Sur/.patch-usb.sh", p: password)
                                     downloadStatus = "Injecting Full App..."
                                 } catch {
-                                    _ = try? call("mdutil -i on /Volumes/Install\\ macOS\\ Big\\ Sur", p: password)
+                                    _ = try? call("sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist", p: password)
+                                    _ = try? call("sudo launchctl enable system/com.apple.displaypolicyd", p: password)
                                     downloadStatus = error.localizedDescription
                                 }
                             }
@@ -128,12 +134,13 @@ struct CreateInstallMedia: View {
                                 do {
                                     _ = try call("rm -rf \"/Applications/Patched Sur.app\"")
                                     try call("cp -rf \"/Volumes/Patched-Sur/.fullApp.app\" \"/Applications/Patched Sur.app\"")
-                                    _ = try? call("sudo mdutil -i on /Volumes/Install\\ macOS\\ Big\\ Sur", p: password)
+                                    _ = try? call("sudo sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist", p: password)
                                     withAnimation {
                                         p = 8
                                     }
                                 } catch {
-                                    _ = try? call("mdutil -i on /Volumes/Install\\ macOS\\ Big\\ Sur", p: password)
+                                    _ = try? call("sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist", p: password)
+                                    _ = try? call("sudo launchctl enable system/com.apple.displaypolicyd", p: password)
                                     downloadStatus = error.localizedDescription
                                 }
                             }
