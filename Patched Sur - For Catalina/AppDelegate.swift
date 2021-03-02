@@ -20,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Create the window and set the content view.
         window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 500, height: 300),
-            styleMask: [.titled, .closable, .miniaturizable, .fullSizeContentView],
+            styleMask: [.titled, .miniaturizable, .fullSizeContentView],
             backing: .buffered, defer: false)
         window.isReleasedWhenClosed = true
         window.center()
