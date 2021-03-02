@@ -93,5 +93,5 @@ It creates the usb installer used to install macOS Big Sur onto your Mac. To do 
 
 The installer is used to flash a copy of something similar to Recovery Mode onto the USB so you can boot into that. However, before that you need to patch it so that you can reinstall macOS like you normally would if something went wrong with your Mac (which in this case is Apple dropping support for it).
 
-Booting into the installer is relatively simple, but you have to do one thing first. Part of the usb patches is that it adds a second drive you need to boot into first. AND!!! I'll finish this later! On to v0.0.4.
+Booting into the installer is relatively simple, but you have to do one thing first. Part of the usb patches is that it adds a second drive you need to boot into first. AND!!! I'll finish this later! On to v0.1.0.
 """
