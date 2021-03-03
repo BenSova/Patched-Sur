@@ -34,7 +34,7 @@ To see if your Mac is supported [click here](https://bensova.gitbook.io/big-sur/
 
 **10.** Reboot your computer, but immediately start holding down the `Option/Alt` key as soon as your Mac turns on.
 
-**11.** Select the __yellow__ EFI Boot drive, (if there are multiple unplug and replug in your drive and select the EFI Boot that disappeared and reappeared).  Then, your Mac will quickly turn off, so turn it back on while, again, holding down `Option/Alt`. Then, select Install macOS Big Sur .
+**11.** Select the __yellow__ EFI Boot drive, (if there are multiple unplug and replug in your drive and select the EFI Boot that disappeared and reappeared).  Then, your Mac will quickly turn off, so turn it back on while, again, holding down `Option/Alt`. Then, select Install macOS Big Sur.
 
 **12.** Once the installer boots, select reinstall macOS and agree to the Terms and Conditions. Then, select the drive you want to install Big Sur onto, (it should be the same drive you ran the patcher on).
 
