@@ -61,3 +61,7 @@ To update macOS, follow the steps below.
 **5.** Enjoy the latest version of macOS!
 
 Note: Apple does not always release InstallAssistant.pkgs for the beta tracks, this means you might be unable to get certian betas.
+
+## Support
+[r/BigSurPatcher Subreddit](https://www.reddit.com/r/BigSurPatcher/)
+[Unsupported Macs Discord](https://discord.com/invite/XbbWAsE) (#bensova-patcher)
