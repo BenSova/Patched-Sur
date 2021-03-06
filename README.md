@@ -7,7 +7,8 @@ Patched Sur is a UI patcher for macOS Big Sur, designed to make it easy to run m
 ## Compatibility
 To see if your Mac is supported [click here](https://bensova.gitbook.io/big-sur/supported-macs).
 
-**TURN OFF FILEVAULT**
+## FILEVAULT Warning 
+**You must Turn FILEVAULT Off before using Patched Sur**
 
 ## How do I use Patched Sur?
 
