@@ -46,7 +46,7 @@ To see if your Mac is supported [click here](https://bensova.gitbook.io/big-sur/
 
 To choose a different installer that you already have downloaded, click `View Other Versions`. Then, click `Find an Installer` and navigate to the InstallAssistant.pkg or Install macOS Big Sur.app file you would like to use.
 
-#### How would I update macOS? (Not in current release)
+#### How would I update macOS? (Stating in 0.10+)
 
 To update macOS, follow the steps below.
 
