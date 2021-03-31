@@ -23,7 +23,7 @@ The patcher shouldn't let you upgrade anyway, but it's good to make sure it's of
    - How much functionality you will get out of macOS once the patching process is complete
    - How the patcher works, and what it does to your Mac
 
-**4.** Next, you can choose what update track you would like to update with. `Release` is the default, but you can also choose `Public Beta` and `Developer Beta` if you want one of the beta tracks. (Note: Apple does not always release InstallAssistant.pkgs for the beta tracks, this means you might be unable to get certian betas.)
+**4.** Next, you can choose what update track you would like to update with. `Release` is the default, but you can also choose `Public Beta` and `Developer Beta` if you want one of the beta tracks. (Note: Apple does not always release InstallAssistant.pkgs for the beta tracks, this means you might be unable to get certain betas.)
 
 **5.** Then, you can select whether you want to update macOS from Catalina to Big Sur (or Big Sur to Big Sur if you are switching from a different patcher) or do a clean install of Big Sur (currently unavailable).
 
@@ -63,7 +63,7 @@ To update macOS, follow the steps below.
 
 **5.** Enjoy the latest version of macOS!
 
-Note: Apple does not always release InstallAssistant.pkgs for the beta tracks and some minor updates, this means you might be unable to get certian upates.
+Note: Apple does not always release InstallAssistant.pkgs for the beta tracks and some minor updates, this means you might be unable to get certain upates.
 
 ## Support
 
