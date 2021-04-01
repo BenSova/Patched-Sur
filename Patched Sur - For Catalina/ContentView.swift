@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-extension UserDefaults {
-    static let data = UserDefaults(suiteName: "52RY4VB4F6.bensova.Patched-Sur-Data")!
-}
-
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
@@ -39,36 +35,47 @@ struct AllViews : View {
     @State var packageLocation = "~/.patched-sur/InstallAssistant.pkg"
     @State var appLocation = nil as String?
     var body: some View {
-        switch progress {
-        case 0:
-            ZStack {
-                MainView(p: $progress).transition(.moveAway)
-//                EnterPasswordPrompt(password: $password, show: .constant(true))
+        ZStack {
+            switch progress {
+            case 0:
+                ZStack {
+                    MainView(p: $progress).transition(.moveAway)
+    //                EnterPasswordPrompt(password: $password, show: .constant(true))
+                }
+            case 1:
+                MacCompatibility(p: $progress).transition(.moveAway)
+            case 2:
+                HowItWorks(p: $progress).transition(.moveAway)
+            case 9:
+                ReleaseTrackView(track: $releaseTrack, p: $progress).transition(.moveAway)
+            case 10:
+                InstallMethodView(method: $installMethod, p: $progress).transition(.moveAway)
+            case 3:
+                DownloadView(p: $progress).transition(.moveAway)
+            case 4:
+                InstallPackageView(installInfo: $installInfo, password: $password, p: $progress, overrideInstaller: $overrideinstaller, track: $releaseTrack, useCurrent: $useCurrent, package: $packageLocation, installer: $appLocation).transition(.moveAway)
+            case 5:
+                VolumeSelector(p: $progress, volume: $volume).transition(.moveAway)
+            case 6:
+                ConfirmVolumeView(volume: $volume, p: $progress).transition(.moveAway)
+            case 7:
+                CreateInstallMedia(volume: $volume, password: $password, overrideInstaller: $overrideinstaller, p: $progress, installer: $appLocation).transition(.moveAway)
+            case 8:
+                FinishedView(app: appLocation ?? "/Applications/Install macOS Big Sur Beta.app/").transition(.moveAway)
+            case 11:
+                InstallerChooser(p: $progress, installInfo: $installInfo, track: $releaseTrack, useCurrent: $useCurrent, package: $packageLocation, installer: $appLocation).transition(.moveAway)
+            default:
+                Text("Uh-oh Looks like you went to the wrong page. Error 0x\(progress)").transition(.moveAway)
             }
-        case 1:
-            MacCompatibility(p: $progress).transition(.moveAway)
-        case 2:
-            HowItWorks(p: $progress).transition(.moveAway)
-        case 9:
-            ReleaseTrackView(track: $releaseTrack, p: $progress).transition(.moveAway)
-        case 10:
-            InstallMethodView(method: $installMethod, p: $progress).transition(.moveAway)
-        case 3:
-            DownloadView(p: $progress).transition(.moveAway)
-        case 4:
-            InstallPackageView(installInfo: $installInfo, password: $password, p: $progress, overrideInstaller: $overrideinstaller, track: $releaseTrack, useCurrent: $useCurrent, package: $packageLocation, installer: $appLocation).transition(.moveAway)
-        case 5:
-            VolumeSelector(p: $progress, volume: $volume).transition(.moveAway)
-        case 6:
-            ConfirmVolumeView(volume: $volume, p: $progress).transition(.moveAway)
-        case 7:
-            CreateInstallMedia(volume: $volume, password: $password, overrideInstaller: $overrideinstaller, p: $progress, installer: $appLocation).transition(.moveAway)
-        case 8:
-            FinishedView(app: appLocation ?? "/Applications/Install macOS Big Sur Beta.app/").transition(.moveAway)
-        case 11:
-            InstallerChooser(p: $progress, installInfo: $installInfo, track: $releaseTrack, useCurrent: $useCurrent, package: $packageLocation, installer: $appLocation).transition(.moveAway)
-        default:
-            Text("Uh-oh Looks like you went to the wrong page. Error 0x\(progress)").transition(.moveAway)
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text("v\(AppInfo.version) (\(AppInfo.build))")
+                        .font(.caption)
+                        .padding()
+                }
+            }
         }
     }
 }

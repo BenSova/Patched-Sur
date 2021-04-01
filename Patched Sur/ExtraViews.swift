@@ -86,7 +86,7 @@ struct EnterPasswordButton: View {
                     .cornerRadius(10)
                     .frame(width: 300)
                     .opacity(0.7)
-                SecureField("Enter password to install...", text: $password)
+                SecureField("Enter password to continue...", text: $password)
                     .foregroundColor(.white)
                     .lineLimit(1)
                     .padding(6)
@@ -141,26 +141,6 @@ struct EnterPasswordButton: View {
             .padding(.top, 10)
             .opacity(password == "" ? 0.4 : 1)
         }.fixedSize()
-        .onAppear {
-            print("Checking for password in keychain...")
-            guard let passwordData = KeyChain.load(key: "bensova.Patched-Sur.userpass") else {
-                print("Not there, so prompting for password.")
-                return
-            }
-            print("Something is in keychain, attemping to decode...")
-            guard let passwordN = String(data: passwordData, encoding: .utf8) else {
-                print("Unable to decode data, so promting for password.")
-                return
-            }
-            print("Decoded password, checking to see if it is still valid...")
-            if (try? call("echo Hi", p: password)) == nil {
-                print("Password is invalid, so promting for password.")
-                return
-            }
-            print("The password is correct, so skipping this prompt.")
-            password = passwordN
-            onDone()
-        }
     }
 }
 

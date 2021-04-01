@@ -18,7 +18,7 @@ struct StartInstallView: View {
         VStack {
             Text("Ready to Update!")
                 .bold()
-            Text("Once you enter your password, Patched Sur will finish preparing for the update and restart into the macOS Updater. After a while, macOS will be finished installing and you can patch the kexts and then enjoy macOS. This will take a while! Just like the preparing for update part of system preferences, this isn't the fastest thing in the world.")
+            Text("Now, Patched Sur will finish preparing for the update and restart into the macOS Updater. After a while, macOS will be finished installing and you can patch the kexts and then enjoy macOS. This will take a while! Just like the preparing for update part of system preferences, this isn't the fastest thing in the world.")
                 .padding()
                 .multilineTextAlignment(.center)
             if errorT == "" {
@@ -43,6 +43,7 @@ struct StartInstallView: View {
                                             currentText = $0 != "Password:" ? $0 : "Starting OS Installer"
                                         }
                                         if !installerPath.hasSuffix("app") {
+                                            scheduleNotification(title: "macOS Update Starting Soon", body: "macOS and the kexts finished downloading, and the updater is getting ready to start. Make sure to save your work, since it could start anytime soon.")
                                             currentText = "Cleaning up before extraction"
                                             print("Clean up before extraction...")
                                             if (try? call("[[ -d /Applications/Install\\ macOS\\ Big\\ Sur.app ]]")) != nil || (try? call("[[ -d /Applications/Install\\ macOS\\ Big\\ Sur\\ Beta.app ]]")) != nil {
@@ -71,11 +72,13 @@ struct StartInstallView: View {
 //                                            _ = try? call("rm -rf ~/.patched-sur/pkg-extract", p: password)
                                             currentText = "Starting OS Installer"
                                             print("Starting OS Installer....")
-                                            try call("/Applications/Install\\ macOS\\ Big\\ Sur.app/Contents/Resources/startosinstall --volume / --nointeraction", p: password, h: handle)
+                                            try call("/Applications/Install\\ macOS\\ Big\\ Sur*.app/Contents/Resources/startosinstall --volume / --nointeraction", p: password, h: handle)
+//                                            try call("[[ -e /Applications/Install\\ macOS\\ Big\\ Sur.app/Contents/Resources/startosinstall ]]")
                                         } else {
                                             currentText = "Starting OS Installer"
                                             print("Starting OS Installer...")
                                             try call("'\(installerPath)/Contents/Resources/startosinstall' --volume / --nointeraction", p: password, h: handle)
+//                                            try call("[[ -e '\(installerPath)/Contents/Resources/startosinstall' ]]")
                                         }
                                     } catch {
                                         errorT = error.localizedDescription

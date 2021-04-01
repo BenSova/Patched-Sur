@@ -45,13 +45,13 @@ struct DownloadView: View {
                                     _ = try? Folder(path: "~/.patched-sur/big-sur-micropatcher").delete()
                                     _ = try? call("rm -rf ~/.patched-sur/big-sur-micropatcher*")
                                     _ = try? File(path: "~/.patched-sur/big-sur-micropatcher.zip").delete()
-                                    if let sizeString = try? shellOut(to: "curl -sI https://codeload.github.com/barrykn/big-sur-micropatcher/zip/v\(AppInfo.micropatcher) | grep -i Content-Length | awk '{print $2}'"), let sizeInt = Int(sizeString) {
+                                    if let sizeString = try? shellOut(to: "curl -sI https://codeload.github.com/BenSova/big-sur-micropatcher/zip/main | grep -i Content-Length | awk '{print $2}'"), let sizeInt = Int(sizeString) {
                                         downloadSize = sizeInt
                                     }
-                                    try call("curl -o ~/.patched-sur/big-sur-micropatcher.zip https://codeload.github.com/barrykn/big-sur-micropatcher/zip/v\(AppInfo.micropatcher)")
+                                    try call("curl -o ~/.patched-sur/big-sur-micropatcher.zip https://codeload.github.com/BenSova/big-sur-micropatcher/zip/main")
                                     try call("unzip big-sur-micropatcher.zip", at: "~/.patched-sur")
                                     _ = try? File(path: "~/.patched-sur/big-sur-micropatcher*").delete()
-                                    try call("mv ~/.patched-sur/big-sur-micropatcher-\(AppInfo.micropatcher) ~/.patched-sur/big-sur-micropatcher")
+                                    try call("mv ~/.patched-sur/big-sur-micropatcher-main ~/.patched-sur/big-sur-micropatcher")
                                     withAnimation {
                                         p = 4
                                     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AboutMyMac: View {
-    let systemVersion: String
+    var systemVersion: String
     let releaseTrack: String
     var gpu: String
     var model: String

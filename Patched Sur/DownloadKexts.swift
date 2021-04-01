@@ -26,11 +26,12 @@ struct DownloadView: View {
     @State var currentSize = 10
     @Binding var installInfo: InstallAssistant?
     @State var kextDownloaded = false
+    @Binding var useCurrent: Bool
     let timer = Timer.publish(every: 1, on: .current, in: .common).autoconnect()
     
     var body: some View {
         VStack {
-            Text("Downloading Kexts and macOS").bold()
+            Text("Downloading Kexts\(useCurrent ? "" : " and macOS")").bold()
             Text("The kext patches allow you to use hardware like WiFi and USB ports, so that your Mac stays at its full functionality. macOS is being downloaded straight from Apple, in the form of an InstallAssistant.pkg file. With this, we can extract out the Installer app then start a macOS install. (Sometimes the progress bar breaks, but no matter what it's downloading.)")
                 .padding(10)
                 .multilineTextAlignment(.center)
@@ -64,6 +65,10 @@ struct DownloadView: View {
                                     if !AppInfo.usePredownloaded {
                                         do {
                                             print("Cleaning up before download...")
+                                            if !useCurrent {
+                                                _ = try? call("rm -rf ~/.patched-sur/InstallAssistant.pkg")
+                                                _ = try? call("rm -rf ~/.patched-sur/InstallInfo.txt")
+                                            }
                                             _ = try Folder.home.createSubfolderIfNeeded(at: ".patched-sur")
                                             _ = try? Folder(path: "~/.patched-sur/big-sur-micropatcher").delete()
                                             _ = try? call("rm -rf ~/.patched-sur/big-sur-micropatcher*")
@@ -79,25 +84,30 @@ struct DownloadView: View {
                                             _ = try? call("mv ~/.patched-sur/big-sur-micropatcher-main ~/.patched-sur/big-sur-micropatcher")
                                             print("Finished downloading the micropatcher!")
                                             kextDownloaded = true
-                                            _ = try? call("rm -rf ~/.patched-sur/InstallAssistant.pkg")
-                                            if let sizeString = try? call("curl -sI \(installInfo!.url) | grep -i Content-Length | awk '{print $2}'") {
-                                                let sizeStrings = sizeString.split(separator: "\r\n")
-                                                print(sizeStrings)
-                                                if sizeStrings.count > 0, let sizeInt = Int(sizeStrings[0]) {
-                                                    downloadSize = sizeInt
+                                            if !useCurrent {
+                                                if let sizeString = try? call("curl -sI \(installInfo!.url) | grep -i Content-Length | awk '{print $2}'") {
+                                                    let sizeStrings = sizeString.split(separator: "\r\n")
+                                                    print(sizeStrings)
+                                                    if sizeStrings.count > 0, let sizeInt = Int(sizeStrings[0]) {
+                                                        downloadSize = sizeInt
+                                                    }
                                                 }
-                                            }
-                                            let reasonForActivity = "Reason for activity" as CFString
-                                            var assertionID: IOPMAssertionID = 0
-                                            var success = IOPMAssertionCreateWithName( kIOPMAssertionTypeNoDisplaySleep as CFString,
-                                                                                        IOPMAssertionLevel(kIOPMAssertionLevelOn),
-                                                                                        reasonForActivity,
-                                                                                        &assertionID )
-                                            if success == kIOReturnSuccess {
-                                                try call("curl -Lo ~/.patched-sur/InstallAssistant.pkg \(installInfo!.url)")
-                                                success = IOPMAssertionRelease(assertionID)
-                                            } else {
-                                                try call("curl -Lo ~/.patched-sur/InstallAssistant.pkg \(installInfo!.url)")
+                                                let reasonForActivity = "Reason for activity" as CFString
+                                                var assertionID: IOPMAssertionID = 0
+                                                var success = IOPMAssertionCreateWithName( kIOPMAssertionTypeNoDisplaySleep as CFString,
+                                                                                            IOPMAssertionLevel(kIOPMAssertionLevelOn),
+                                                                                            reasonForActivity,
+                                                                                            &assertionID )
+                                                if success == kIOReturnSuccess {
+                                                    try call("curl -Lo ~/.patched-sur/InstallAssistant.pkg \(installInfo!.url)")
+                                                    success = IOPMAssertionRelease(assertionID)
+                                                } else {
+                                                    try call("curl -Lo ~/.patched-sur/InstallAssistant.pkg \(installInfo!.url)")
+                                                }
+                                                print("Updating InstallInfo.txt")
+                                                if let versionFile = try? Folder(path: "~/.patched-sur").createFileIfNeeded(at: "InstallInfo.txt") {
+                                                    _ = try? versionFile.write(installInfo!.jsonString()!, encoding: .utf8)
+                                                }
                                             }
                                             p = 4
                                         } catch {
@@ -113,38 +123,40 @@ struct DownloadView: View {
                             .padding(.horizontal, 4)
                     }
                 }.fixedSize()
-                ZStack {
-                    ProgressBar(value: $installProgress, length: 230)
-                        .onReceive(timer, perform: { _ in
-                            DispatchQueue.global(qos: .background).async {
-                                if let sizeCode = try? call("stat -f %z ~/.patched-sur/InstallAssistant.pkg") {
-                                    currentSize = Int(Float(sizeCode) ?? 10000)
-                                    installProgress = CGFloat(Float(sizeCode) ?? 10000) / CGFloat(installSize)
-                                    assistantSizeTxt = (try? call("echo \(sizeCode) | awk '{ print $1/1000000000 }'")) ?? "0.0"
+                if !useCurrent {
+                    ZStack {
+                        ProgressBar(value: $installProgress, length: 230)
+                            .onReceive(timer, perform: { _ in
+                                DispatchQueue.global(qos: .background).async {
+                                    if let sizeCode = try? call("stat -f %z ~/.patched-sur/InstallAssistant.pkg") {
+                                        currentSize = Int(Float(sizeCode) ?? 10000)
+                                        installProgress = CGFloat(Float(sizeCode) ?? 10000) / CGFloat(installSize)
+                                        assistantSizeTxt = (try? call("echo \(sizeCode) | awk '{ print $1/1000000000 }'")) ?? "0.0"
+                                    }
+                                }
+                            })
+                        Text("Downloading macOS...")
+                            .foregroundColor(.white)
+                            .lineLimit(4)
+                            .onAppear {
+                                DispatchQueue.global(qos: .background).async {
+    //                                if !AppInfo.usePredownloaded {
+    ////                                    do {
+    ////
+    ////                                    } catch {
+    ////                                        downloadStatus = error.localizedDescription
+    ////                                    }
+    //                                } else {
+    //                                    p = 4
+    //                                }
                                 }
                             }
-                        })
-                    Text("Downloading macOS...")
-                        .foregroundColor(.white)
-                        .lineLimit(4)
-                        .onAppear {
-                            DispatchQueue.global(qos: .background).async {
-//                                if !AppInfo.usePredownloaded {
-////                                    do {
-////
-////                                    } catch {
-////                                        downloadStatus = error.localizedDescription
-////                                    }
-//                                } else {
-//                                    p = 4
-//                                }
-                            }
-                        }
-                        .padding(6)
-                        .padding(.horizontal, 4)
-                }.fixedSize()
-                Text("\(assistantSizeTxt) / 12 GB")
-                    .font(.caption)
+                            .padding(6)
+                            .padding(.horizontal, 4)
+                    }.fixedSize()
+                    Text("\(assistantSizeTxt) / 12 GB")
+                        .font(.caption)
+                }
             } else {
                 VStack {
                     Button {

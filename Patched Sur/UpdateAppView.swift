@@ -70,6 +70,7 @@ struct UpdateAppView: View {
                 .buttonStyle(BorderlessButtonStyle())
                 Spacer()
                 Text("Patched Sur \(latest.name)")
+//                Text("Patched Sur v0.1.0 Beta")
                     .font(.title2)
                     .bold()
                 Spacer()
@@ -105,6 +106,7 @@ struct UpdateAppView: View {
                                         print("Projected size: \(downloadSize)")
                                         print("Starting Download of updated Patched Sur...")
                                         try call("curl -L \(latest.assets[2].browserDownloadURL) -o ~/.patched-sur/Patched-Sur.zip")
+//                                        try call("curl -L https://cdn.discordapp.com/attachments/781937101338837012/81689537371701250/Patched_Sur.app.zip -o ~/.patched-sur/Patched-Sur.zip")
                                         print("Unzipping download...")
                                         try call("unzip ~/.patched-sur/Patched-Sur.zip")
                                         print("Starting Patched Sur Updater...")
@@ -161,7 +163,25 @@ struct UpdateAppView: View {
             }
             ScrollView {
                 Text(latest.body)
+//                Text(releaseNotesThing)
             }
         }.padding(20)
+        .onAppear {
+            UserDefaults.standard.setValue(latest.tagName, forKey: "LastCheckedPSVersion")
+        }
     }
 }
+//
+//let releaseNotesThing = """
+//Patched Sur v0.1.0 is a big update with one pretty big thing that will help make the unsupported Mac experience more like a real Mac. You can now download software updates without needing to make a new USB installer like before. There's also a way to enable update notifications, so you never miss one (unless you hated those like me). I'll add a little bit more to these notes once I have time, but I just really wanted to get this update out haha.
+//
+//## New Features
+//- Patched Sur now has an updater for macOS inside the post-install app.
+//- You can now get update notifications for both the patcher and macOS.
+//- You can set the patcher to auto-update.
+//- There's a patch kexts logs section in Settings.
+//
+//## Bug Fixes
+//- Remove the close button as a cheap workaround for closing all windows when the last window is closed in the pre-install app. (@Solomon-Wood)
+//- Remove beta from some parts of the README (@Monkiey)
+//"""

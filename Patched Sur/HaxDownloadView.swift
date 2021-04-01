@@ -15,6 +15,7 @@ struct HaxDownloadView: View {
     @State var hasPassword = false
     @Binding var password: String
     @Binding var p: Int
+    @Binding var useCurrent: Bool
     var body: some View {
         VStack {
             Text("Starting Installer Enviorment")

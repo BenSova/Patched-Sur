@@ -47,6 +47,8 @@ struct ButtonsView: View {
         case 1:
             RunActionsDisplayView(action: {
                 do {
+                    print("Making sure that the micropatcher is actually in the right directory.")
+                    _ = try? call("mv ~/.patched-sur/big-sur-micropatcher ~/.patched-sur/big-sur-micropatcher")
                     print("Checking for USB at \"/Volumes/Install macOS Big Sur Beta\"...")
                     if (try? call("[[ -d '/Volumes/Install macOS Big Sur Beta' ]]")) != nil {
                         print("Found installer at Beta path")
@@ -64,9 +66,13 @@ struct ButtonsView: View {
                     print("Checking for kexts at \"~/.patched-sur/big-sur-micropatcher/payloads/kexts\"")
                     if (try? call("[[ -d ~/.patched-sur/big-sur-micropatcher/payloads/kexts ]]")) != nil {
                         print("Found pre-downloaded kexts!")
-                        installerName = "~/.patched-sur/big-sur-micropatcher/payloads"
-                        p = 2
-                        return
+                        print("Making sure this is Ben's fork...")
+                        if (try? call("cat ~/.patched-sur/big-sur-micropatcher/payloads/patch-kexts.sh | grep \".patched-sur/big-sur-micropatcher/payloads\"")) != nil {
+                            print("This is Ben's fork of the micropatcher")
+                            installerName = "~/.patched-sur/big-sur-micropatcher/payloads"
+                            p = 2
+                            return
+                        }
                     }
                     throw ShellOutError(terminationStatus: 1, errorData: .init(), outputData: .init())
                 } catch {

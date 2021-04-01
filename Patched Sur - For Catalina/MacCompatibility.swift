@@ -60,7 +60,7 @@ struct MacCompatibility: View {
                                 if problems.map({ $0.type }).contains("Fatal") {
                                     alert = .init(title: Text("Fatal Errors Were Detected"), message: Text("There are some errors that were detected that could cause huge problems with Big Sur. Please resolve them if you can, otherwise you will not be able to install Big Sur."), dismissButton: .cancel(Text("Okay")))
                                 } else {
-                                    alert = .init(title: Text("Some Possible Problems Were Detected"), message: Text("There are some problems that were detected that might cause some problems with Big Sur. While you could be fine, it's best to resolve as many of these as you can before starting installiation."), primaryButton: .default(Text("Continue"), action: { progress2 = info != nil ? .clean : .noCompat }), secondaryButton: .cancel())
+                                    alert = .init(title: Text("Some Possible Problems Were Detected"), message: Text("There are some problems that were detected that might cause some problems with Big Sur. While you could be fine, it's best to resolve as many of these as you can before starting installation."), primaryButton: .default(Text("Continue"), action: { progress2 = info != nil ? .clean : .noCompat }), secondaryButton: .cancel())
                                 }
                             }
 //                        }

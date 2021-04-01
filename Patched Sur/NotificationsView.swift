@@ -240,5 +240,9 @@ struct NotificationsView: View {
                 }.padding(20)
             }
         }
+        .onAppear {
+            notifications = UserDefaults.standard.string(forKey: "Notifications") ?? "NOTHING"
+            autoUpdate = UserDefaults.standard.string(forKey: "AutoUpdate") ?? "NOUPDATE"
+        }
     }
 }
