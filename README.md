@@ -7,7 +7,7 @@ Patched Sur is a UI patcher for macOS Big Sur, designed to make it easy to run m
 ## Compatibility
 To see if your Mac is supported [click here](https://bensova.gitbook.io/big-sur/supported-macs).
 
-(Basically it says if you have a 2012/2013 Mac it'll be terrible but anything else is better).
+(Basically it says if you have anything older than a 2012/2013 Mac it'll be terrible).
 
 ## Credits
 
